@@ -7,7 +7,8 @@ export const ImageGalleryItem = ({ loadedPhotos, onClick}) => {
         <li key={photo.id} onClick={onClick} className={css.galleryItem}>
             <img
                 className={css.image}
-                src={photo.webformatURL}
+                    src={photo.webformatURL}
+                    srcSet={photo.largeImageURL}
                 alt={photo.tags}
             />
         </li>
