@@ -5,7 +5,7 @@ export const Searchbar = ({ onSubmit }) => {
     <header className={css.searchbar}>
       <form className={css.form} onSubmit={onSubmit}>
         <button type="submit" className={css.button}>
-          <span className={css.button_label}>Search</span>
+          Search
         </button>
 
         <input
