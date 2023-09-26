@@ -1,4 +1,5 @@
 import css from './Button.module.css';
+import PropTypes from 'prop-types';
 
 export const LoadMoreButton = ({ showButton, onClick }) => {
   return (
@@ -11,3 +12,8 @@ export const LoadMoreButton = ({ showButton, onClick }) => {
     </div>
   );
 };
+
+LoadMoreButton.propTypes = {
+  showButton: PropTypes.bool,
+  onClick: PropTypes.func,
+}

@@ -70,7 +70,7 @@ export class App extends Component {
     }
     const srcset = e.target.srcset;
     this.setState({ isModalOpen: true, modalURL: srcset }, () => {
-      console.log(this.state);
+      console.log(this.state.images[0]);
     });
   };
 
@@ -87,27 +87,20 @@ export class App extends Component {
   render() {
     const { isLoading, images, isModalOpen, modalURL } = this.state;
     return (
-      <div
-        styles={{
-          // display: 'grid',
-          // gridTemplateColumns: '1fr',
-          // gridGap: '16px',
-          // paddingBottom: '24px',
-         
-        }}
-      >
+      <div>
         <Searchbar onSubmit={this.handleSubmit}></Searchbar>
-        
-             {!isLoading ? (
+
+        {!isLoading ? (
           <ImageGallery onClick={this.openModal}>
             <ImageGalleryItem loadedPhotos={images}></ImageGalleryItem>
           </ImageGallery>
         ) : (
-            <div className='container'><Blocks/></div>
+          <div className="container">
+            <Blocks />
+          </div>
         )}
-        
-        
-     <LoadMoreButton
+
+        <LoadMoreButton
           showButton={images.length > 0}
           onClick={this.fetchMoreImages}
         ></LoadMoreButton>
