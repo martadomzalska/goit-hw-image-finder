@@ -65,9 +65,9 @@ export class App extends Component {
   };
 
   openModal = e => {
-     if (e.target.nodeName !== 'IMG') {
-       return;
-     }
+    if (e.target.nodeName !== 'IMG') {
+      return;
+    }
     const srcset = e.target.srcset;
     this.setState({ isModalOpen: true, modalURL: srcset }, () => {
       console.log(this.state);
@@ -101,7 +101,7 @@ export class App extends Component {
             <ImageGalleryItem loadedPhotos={images}></ImageGalleryItem>
           </ImageGallery>
         ) : (
-          <Blocks/>
+          <Blocks />
         )}
         <LoadMoreButton
           showButton={images.length > 0}
