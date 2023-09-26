@@ -2,14 +2,9 @@ import { Component } from 'react';
 import { Blocks } from 'react-loader-spinner';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
 import { LoadMoreButton } from './Button/Button';
 import { Modal } from './Modal/Modal';
-
-//key for API
-const key = '32145411-8f2f66f9688645c1a0ae56fcc';
-//apiURL
-const apiURL = `https://pixabay.com/api/?&key=${key}&image_type=photo&orientation=horizontal&per_page=12`;
+import { fetchImages } from 'services/api';
 
 export class App extends Component {
   state = {
@@ -18,6 +13,7 @@ export class App extends Component {
     isLoading: false,
     modalURL: '',
     isModalOpen: false,
+    totalHits: null,
   };
 
   componentDidMount() {
@@ -28,34 +24,36 @@ export class App extends Component {
     window.removeEventListener('keydown', this.handleKeyPress);
   }
 
-  fetchAPI = async (q, page) => {
+  async handleFetchImages(q, page) {
     try {
       this.setState({ isLoading: true });
-      const response = await fetch(apiURL + `&q=${q}&page=${page}`);
-      const data = await response.json();
-      const images = data.hits;
+      const images = await fetchImages(q, page).then(data => {
+        this.setState({ totalHits: data.totalHits });
+        return data.hits;
+      });
       this.setState(prevState => ({
         images: prevState.images.concat(images),
       }));
     } catch (error) {
-      this.setState({ error });
+      this.setState({ isLoading: false, error });
       console.log(error);
     }
-  };
+  }
 
   handleSubmit = async e => {
     e.preventDefault();
     const searchbarValue = e.currentTarget.elements.searchbar.value;
     this.setState({ currentPage: 1, images: [], currentQuery: searchbarValue });
-    await this.fetchAPI(searchbarValue, 1);
+    await this.handleFetchImages(searchbarValue, 1);
     this.setState({ isLoading: false });
   };
 
   fetchMoreImages = () => {
     const { currentQuery, currentPage } = this.state;
-    this.fetchAPI(currentQuery, currentPage + 1);
+    this.handleFetchImages(currentQuery, currentPage + 1);
     this.handleCurrentPageUpdate();
     this.setState({ isLoading: false });
+    console.log(this.state);
   };
 
   handleCurrentPageUpdate = () => {
@@ -83,23 +81,24 @@ export class App extends Component {
   };
 
   render() {
-    const { isLoading, images, isModalOpen, modalURL } = this.state;
+    const { isLoading, images, isModalOpen, modalURL, totalHits } = this.state;
     return (
       <div>
         <Searchbar onSubmit={this.handleSubmit}></Searchbar>
 
         {!isLoading ? (
-          <ImageGallery onClick={this.openModal}>
-            <ImageGalleryItem loadedPhotos={images}></ImageGalleryItem>
+          <ImageGallery loadedPhotos={images}onClick={this.openModal}>
           </ImageGallery>
         ) : (
           <div className="container">
-            <Blocks />
+              <Blocks />
+             
           </div>
         )}
+        {totalHits === 0 && <p>We're sorry, the picutures you are looking for were not found :( Try searching something else!</p>}
 
         <LoadMoreButton
-          showButton={images.length > 0}
+          showButton={images.length > 0 && images.length < totalHits}
           onClick={this.fetchMoreImages}
         ></LoadMoreButton>
         <Modal
