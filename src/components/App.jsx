@@ -89,21 +89,25 @@ export class App extends Component {
     return (
       <div
         styles={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-          gridGap: '16px',
-          paddingBottom: '24px',
+          // display: 'grid',
+          // gridTemplateColumns: '1fr',
+          // gridGap: '16px',
+          // paddingBottom: '24px',
+         
         }}
       >
         <Searchbar onSubmit={this.handleSubmit}></Searchbar>
-        {!isLoading ? (
+        
+             {!isLoading ? (
           <ImageGallery onClick={this.openModal}>
             <ImageGalleryItem loadedPhotos={images}></ImageGalleryItem>
           </ImageGallery>
         ) : (
-          <Blocks />
+            <div className='container'><Blocks/></div>
         )}
-        <LoadMoreButton
+        
+        
+     <LoadMoreButton
           showButton={images.length > 0}
           onClick={this.fetchMoreImages}
         ></LoadMoreButton>
