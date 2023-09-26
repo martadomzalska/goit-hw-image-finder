@@ -69,9 +69,7 @@ export class App extends Component {
       return;
     }
     const srcset = e.target.srcset;
-    this.setState({ isModalOpen: true, modalURL: srcset }, () => {
-      console.log(this.state.images[0]);
-    });
+    this.setState({ isModalOpen: true, modalURL: srcset });
   };
 
   closeModal = () => {
