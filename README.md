@@ -6,6 +6,11 @@ queries. With a simple interface, you can easily browse through search results
 and explore different images. This project showcases key skills I learned, like
 working with APIs and managing state.
 
+
+![app-screen](https://github.com/user-attachments/assets/2bde6050-a751-4701-9714-7fab1d587910)
+
+
+
 ## Technologies
 
 - React
