@@ -1,8 +1,8 @@
 {
-  "name": "goit-hw-image-finder",
+  "name": "image-finder",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://martadomzalska.github.io/goit-hw-image-finder/",
+  "homepage": "https://martadomzalska.github.io/image-finder/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
